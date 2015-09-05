@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Introducción a la criptografía y a la seguridad de la información</title>
+		<link href='http://fonts.googleapis.com/css?family=Karma:400,300,500,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="/css/foundation.css">
+		<link rel="stylesheet" type="text/css" href="/css/normalize.css">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<script src="/js/jquery-1.11.3.js"></script>
+		<script src="/js/foundation.min.js"></script>
+		<script type="text/javascript" src="/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script src="/js/uncrypt.js"></script>
+		<script src="/js/displacement.js"></script>
+		<script>
+			MathJax.Hub.Config({
+				"HTML-CSS": {
+					preferredFont: "Gyre-Termes"
+				},
+				tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+			});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap" data-offcanvas>
+			<div class="inner-wrap">
+				<nav class="tab-bar">
+					<section class="left-small">
+						<a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+					</section>
+					
+					<section class="middle tab-bar-section">
+						<h1 class="title">Sistemas Criptográficos. Autor: Sebastián Alarcón. Docente: Agustín Moreno. <br> Ingeniería de Sistemas. Universidad Nacional de Colombia</h1>
+					</section>
+				</nav>
+
+				<aside class="left-off-canvas-menu">
+					<ul class="off-canvas-list">
+						<li><label>Ir al inicio</label></li>
+						<li><a href="/">Home</a></li>
+						<li><label>Ver un sistema</label></li>
+						<li><a href="/ver/desplazamiento">Sistema de desplazamiento</a></li>
+						<li><label>Atacar un sistema</label></li>
+						<li><a href="/atacar/desplazamiento">Sistema de desplazamiento</a></li>
+					</ul>
+				</aside>
+
+				<section class="main-section">
+					<div class=="row">
+						<div class="large-12 columns text-justify">
+							<h2 class="mayus bold">
+								Sistema de desplazamiento
+							</h2>
+							<img src="/images/caesar.png" alt="" style="width:50%">
+							<p>
+								Este cifrado es una generalización del cifrado Cesar. En este caso se tiene: 
+								<br>
+								<ul>
+								    <li>$ \rho=\varsigma=\kappa=\mathbb{Z}_n $, n fijo</li>
+								    <br>
+								    Para K $ \in \mathbb{Z}_n $ se tiene que:
+								    <li>$ e_k(x) = x + K\ mod \ n $</li>
+								    <li>$ d_k(x) = x - K\ mod \ n $</li>
+								</ul>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="columns large-6">
+							<h4 class="mayus bold">
+								Cifrar 
+								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC4UlEQVRIS81W220aURA9Z4MfkVjLrsCXCqADkwqyriDk0/BhqABcgdcf4E+TCkIqCK4gdJDbgTcskR0nYqK5d3dZiCXbUl78gEZz53HmnBlohosGKOcgpvYkPEP2McNFC1wmtr03KdkagES2Ew5WtjQGcQjhme1UZ2o3w3QA4gjCHmujeSJAi4JYEETqpMFJuRLBWR5MCyGXUwFnth02faBFSxOCnEKkaTth5PywnAjRJTBmbZTK53ZIM0qnIAb2JJxmDxsAkiLBaB4BgXEdFAlS14n66Hu1m8u0CcFAf2vsBxMUbWaPCzhKjzd9/mWCeSISNAG5Avh2bVCPdTBadAHRYX4ApeUg8qQZQ9jSmdE4bNmFYGY7YTdrXZmhMwAgsTLJ+GCRt3Fi29XYnMs+dtIYoIGwWyouey8xc3z/1LdLYC5vDe52E9tjssb54EViT17acnL1/cU2XDTy6l0819mibtvhNR1mWH5EwGOlaAmiJiFGuNXIA5rRfKxw5DR1vmoTvLadvYM8OLfTmdAVe8PacG5VPAgQFwlUE9+qEbYV94znXp06g2RNaBQVVF215NHY0EHB58CtCt9BLhoNWmJS+XEZtlys/1eCTYg2q3tyB35wbvMlCCrHOlAzVG7jiJADCbaazqZ6EfYBMUDQs53qOIOsT6CZL0ZlkBsyeAPii2dRIPuuorvqLKeqt69o6qiMH8ZXXrEuqdJxV1kIYMmkEFpm15n+JaE5SDheE4vb9UrRqkLoPtkaN+sHx+2evm2Hxys/d4TqgFzoLhoTiISMVkJ74OCM5hHB9wJcl3TgjgvIww0dxKtl56+SQVkH3vaEg+PxJ+XTs4RWiO+RdZ1D8myh/dYE2bI7BYKZ7VQvvKBuDZbf+67C+7Cn1HWU3P76BpAW7quvCtvOok5gKqzUvIayoy84ZYB3NMN0AsLrgJVWJjRdbO6fQ3Fw3N8YccyCOMaNi2PlbGsHy78Xdn8CbvKZqPY1AqQAAAAASUVORK5CYII="/>
+							</h4>
+
+							<textarea name="" id="plaintext" class="radius" cols="50" rows="10" value=""></textarea>
+							<br>
+							<label>
+								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABlElEQVRIS82VzVECQRCF39uDXglhIQKIQIhAPADeJAMwAjECIQKXm7tcMAIhAjEBds0Aj2rVtDXDgsvPzvIjVc5tqnr6e/26u4bY4UjNbYJsgSyacJEJIF0GUT/rOW0BUnVzOOPLMvF6sAZ9SYXDaJaWxw6o50cgL+wqZUQ/rOwNMLY4zuPyocgYjnTMXbGzAhZ1xSAaboOkViD1vAfyJvZ8zCAsJxNIsjqRPoOwuS/g1x7BPYPpXH18pF7ogLhLE7CIs1VwYkCj0AXQihXO4EiJT1FkpvTadaH4CjIXK+3Rn7b3s0gnESdMNHkGcDS/SzmRHKDKL+DrkIwxTficPqu39Ke62q3HCjBaGwVd+sPGa8EHRLU5iLx0NpAJMBC90ef0AF7GFj3jU5q2Dc6conVVq2O5ObYHW7R97k8NADwo5eEbb1k27dQD04fk5i7LkgmDsHR0k1MBAOhPrSKPqEDeAXZtO6CFHQrQPehxEE1s9hwDiPPaP5s/AJy0B+bzT/1o/uEm19wiHM7/XSXVXRqsQ38A9mvOGRv15YoAAAAASUVORK5CYII="/>
+								Clave
+								<input type="number" min="0" max="25" id="cipher_key">
+							</label>
+							<input type="button" class="button tiny radius" id="crypt" value="Cifrar!">
+						</div>
+						<div class="columns large-6">
+							<h4 class="mayus bold">
+								Descifrar
+								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACnklEQVRIS61W0XHaQBB9j/HYyUQipIIcFYR0gCswdIA/Iz6MKwgdRD+SP4MriDowHViugHMHNiITY0/YzN4hBxhIhBP9wJ7u9u3u230nYuVpJlM76deNSWcDiDRsPxyatBhDOPDbZGj7Ycek0xGkNrb9YLR6ftt/OmeQE31JoC3AGBDjN9NCpOV+PYABmbs14m65fmejsFs6N0kxBPEBPDi3n15bugjBDJScgishjiHS8/45giAGuIxUeiAGfk1yfa9nJlFI3e6cQ84AXpLSE6m1PQAxtJ/CsUmK2PbDgUlmLXBhbFTPXIbzNyO8emhAfnZsFMQmmWkAue0HeTMtRAHMRdGmSCbCMYD3oNwANGsAf6vntvcKIPPgHY6Ka1/FWheQDonPAun+HwAgg+AWYE4uYhFONAMb1XubJcpAvK2UCQ9OlUSXAXCDedC257xbktwp7XWAi6JdyblueghyHH435GKsZCofyh0p1yL8qLbrkzWSFUAgO0GE9+VB80UaOJxdgbx0xG/YpY9tJWrsBtDOCd3Q+WGjDmNnm70VoGp5TDrtUBDLY9hydd+wV/2sZdBMpzqdlUgu62wufhgsnq5RY1dnaTPIvdvUpEUOQaY65Uuzbv8TgE46iJaNQtdt2pI6UKVU7BC731LxJw6epWAeGlf3pTRoSSsD6KHnNuXBrQ6Si9S1YDEBcer0acUm+K06QFLoJC/bVGJ1tixFDMqJ6owbKHdH+JYtxW5X9pVI1otIwMxJMHgFoGmjsKVO9wIo21SEp+VtpW1IecplHhoczb4SclxKw94A29L0N97izEsxb/AY9JTkcu9eGRjPwfqgibQI3AsxKDlZDWQ/gF1q+hDkq1G/GKCqFu0HkBQZCfdV8bJH7idRfacC/wJf9fli2PMdhQAAAABJRU5ErkJggg=="/>
+							</h4>
+							<textarea name="" id="ciphertext" class="radius" cols="50" rows="10" value=""></textarea>	
+							<br>
+							<label>
+								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABlElEQVRIS82VzVECQRCF39uDXglhIQKIQIhAPADeJAMwAjECIQKXm7tcMAIhAjEBds0Aj2rVtDXDgsvPzvIjVc5tqnr6e/26u4bY4UjNbYJsgSyacJEJIF0GUT/rOW0BUnVzOOPLMvF6sAZ9SYXDaJaWxw6o50cgL+wqZUQ/rOwNMLY4zuPyocgYjnTMXbGzAhZ1xSAaboOkViD1vAfyJvZ8zCAsJxNIsjqRPoOwuS/g1x7BPYPpXH18pF7ogLhLE7CIs1VwYkCj0AXQihXO4EiJT1FkpvTadaH4CjIXK+3Rn7b3s0gnESdMNHkGcDS/SzmRHKDKL+DrkIwxTficPqu39Ke62q3HCjBaGwVd+sPGa8EHRLU5iLx0NpAJMBC90ef0AF7GFj3jU5q2Dc6conVVq2O5ObYHW7R97k8NADwo5eEbb1k27dQD04fk5i7LkgmDsHR0k1MBAOhPrSKPqEDeAXZtO6CFHQrQPehxEE1s9hwDiPPaP5s/AJy0B+bzT/1o/uEm19wiHM7/XSXVXRqsQ38A9mvOGRv15YoAAAAASUVORK5CYII="/>
+								Clave
+								<input type="text" id="decipher_key">
+							</label>
+							<input type="button" class="button tiny radius" id="decrypt" value="Descifrar!">
+						</div>
+					</div>
+				</section>
+
+				<a class="exit-off-canvas"></a>
+
+			</div>
+		</div>
+		<script>
+			$(document).foundation();
+		</script>
+	</body>
+</html>

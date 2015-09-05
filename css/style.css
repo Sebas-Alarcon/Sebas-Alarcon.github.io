@@ -1,0 +1,46 @@
+body *{
+	font-family: 'Karma', serif !important;
+}
+body .left-off-canvas-menu, body .tab-bar{
+	background: #01B4EF;
+}
+
+ul.off-canvas-list li label{
+	background: #135D77;
+	color: white;
+}
+
+ul.off-canvas-list li a:hover{
+	background: #3A4FFF;	
+}
+body .main-section{
+	padding: 3rem;
+}
+
+.tab-bar, .left-small, .tab-bar .menu-icon{
+	height: 5.8125rem;
+}
+
+a.left-off-canvas-toggle.menu-icon:hover{
+	background: #3A4FFF;	
+}
+
+a.left-off-canvas-toggle.menu-icon{
+	-webkit-transition: background-color 700ms linear;
+    -moz-transition: background-color 700ms linear;
+    -o-transition: background-color 700ms linear;
+    -ms-transition: background-color 700ms linear;
+    transition: background-color 700ms linear;
+}
+
+.off-canvas-wrap.move-right a.left-off-canvas-toggle.menu-icon{
+	background: #3A4FFF;	
+}
+
+.mayus{
+	text-transform: uppercase;
+}
+
+.bold{
+	font-weight: 700;
+}
