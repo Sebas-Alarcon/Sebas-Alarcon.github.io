@@ -5,7 +5,7 @@ $( document ).ready(function() {
 	$("#crypt").click(function(){
 		var plaintext = $("#plaintext").val();
 		var key = $("#cipher_key").val();
-		var cipher_text;
+		var ciphertext;
 		if(plaintext==""){
 			alert("Por favor, escribe un texto para ser cifrado");
 		}else if(key==""){
@@ -18,8 +18,8 @@ $( document ).ready(function() {
 				key = 25
 				$("#cipher_key").val(key)
 			}
-			cipher_text = uncrypt.displacement.crypt(plaintext,parseInt(key));
-			$("#ciphertext").val(cipher_text)
+			ciphertext = uncrypt.displacement.crypt(plaintext,parseInt(key));
+			$("#ciphertext").val(ciphertext)
 			$("#decipher_key").val("")
 		}
 	})
@@ -40,8 +40,8 @@ $( document ).ready(function() {
 				key = 25
 				$("#decipher_key").val(key)
 			}
-			cipher_text = uncrypt.displacement.decrypt(ciphertext,parseInt(key));
-			$("#plaintext").val(cipher_text)
+			plaintext = uncrypt.displacement.decrypt(ciphertext,parseInt(key));
+			$("#plaintext").val(plaintext)
 			$("#cipher_key").val("")
 		}
 	})

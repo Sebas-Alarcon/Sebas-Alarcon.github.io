@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="import" href="/templates/temp_head.html">
+		<link rel="import" href="/templates/temp_head.html">		
 		<script type="text/javascript" src="/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-		<script src="/js/displacement.js"></script>
+		<script src="/js/substitution.js"></script>
 		<script>
 			MathJax.Hub.Config({
 				"HTML-CSS": {
@@ -24,19 +24,11 @@
 					<div class=="row">
 						<div class="large-12 columns text-justify">
 							<h2 class="mayus bold">
-								Sistema de desplazamiento
+								Sistema de sustitución
 							</h2>
-							<img src="/images/caesar.png" alt="" style="width:50%; margin: auto; text-align: center; display: block;">
+							<img src="/images/substitution.jpg" alt="" style="width:50%; margin: auto; text-align: center; display: block;">
 							<p>
-								Este cifrado es una generalización del cifrado Cesar. En este caso se tiene: 
-								<br>
-								<ul>
-								    <li>$ \rho=\varsigma=\kappa=\mathbb{Z}_n $, n fijo</li>
-								    <br>
-								    Para K $ \in \mathbb{Z}_n $ se tiene que:
-								    <li>$ e_k(x) = x + K\ mod \ n $</li>
-								    <li>$ d_k(x) = x - K\ mod \ n $</li>
-								</ul>
+								Info cifrado
 							</p>
 						</div>
 					</div>
@@ -51,8 +43,10 @@
 							<br>
 							<label>
 								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABlElEQVRIS82VzVECQRCF39uDXglhIQKIQIhAPADeJAMwAjECIQKXm7tcMAIhAjEBds0Aj2rVtDXDgsvPzvIjVc5tqnr6e/26u4bY4UjNbYJsgSyacJEJIF0GUT/rOW0BUnVzOOPLMvF6sAZ9SYXDaJaWxw6o50cgL+wqZUQ/rOwNMLY4zuPyocgYjnTMXbGzAhZ1xSAaboOkViD1vAfyJvZ8zCAsJxNIsjqRPoOwuS/g1x7BPYPpXH18pF7ogLhLE7CIs1VwYkCj0AXQihXO4EiJT1FkpvTadaH4CjIXK+3Rn7b3s0gnESdMNHkGcDS/SzmRHKDKL+DrkIwxTficPqu39Ke62q3HCjBaGwVd+sPGa8EHRLU5iLx0NpAJMBC90ef0AF7GFj3jU5q2Dc6conVVq2O5ObYHW7R97k8NADwo5eEbb1k27dQD04fk5i7LkgmDsHR0k1MBAOhPrSKPqEDeAXZtO6CFHQrQPehxEE1s9hwDiPPaP5s/AJy0B+bzT/1o/uEm19wiHM7/XSXVXRqsQ38A9mvOGRv15YoAAAAASUVORK5CYII="/>
-								Clave
-								<input type="number" min="0" max="25" id="cipher_key">
+								<h4>Clave</h4>
+								<h6 class="text-justify">La clave debe incluir los 26 caracteres del alfabeto inglés, cada uno separado por un coma y cada posición indicará por cuál caracter será sustituido el caracter del alfabeto original.</h6>
+								<p style="margin-bottom: 0">&nbsp;&nbsp;A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z</p>
+								<input type="text" id="cipher_key" style="text-transform:uppercase">
 							</label>
 							<input type="button" class="button tiny radius" id="crypt" value="Cifrar!">
 						</div>
@@ -65,16 +59,16 @@
 							<br>
 							<label>
 								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABlElEQVRIS82VzVECQRCF39uDXglhIQKIQIhAPADeJAMwAjECIQKXm7tcMAIhAjEBds0Aj2rVtDXDgsvPzvIjVc5tqnr6e/26u4bY4UjNbYJsgSyacJEJIF0GUT/rOW0BUnVzOOPLMvF6sAZ9SYXDaJaWxw6o50cgL+wqZUQ/rOwNMLY4zuPyocgYjnTMXbGzAhZ1xSAaboOkViD1vAfyJvZ8zCAsJxNIsjqRPoOwuS/g1x7BPYPpXH18pF7ogLhLE7CIs1VwYkCj0AXQihXO4EiJT1FkpvTadaH4CjIXK+3Rn7b3s0gnESdMNHkGcDS/SzmRHKDKL+DrkIwxTficPqu39Ke62q3HCjBaGwVd+sPGa8EHRLU5iLx0NpAJMBC90ef0AF7GFj3jU5q2Dc6conVVq2O5ObYHW7R97k8NADwo5eEbb1k27dQD04fk5i7LkgmDsHR0k1MBAOhPrSKPqEDeAXZtO6CFHQrQPehxEE1s9hwDiPPaP5s/AJy0B+bzT/1o/uEm19wiHM7/XSXVXRqsQ38A9mvOGRv15YoAAAAASUVORK5CYII="/>
-								Clave
-								<input type="text" id="decipher_key">
+								<h4>Clave</h4>
+								<h6 class="text-justify">La clave debe incluir los 26 caracteres del alfabeto inglés, cada uno separado por un coma y cada posición indicará por cuál caracter será sustituido el caracter del alfabeto original.</h6>
+								<p style="margin-bottom: 0">&nbsp;&nbsp;A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z</p>
+								<input type="text" id="decipher_key" style="text-transform:uppercase">
 							</label>
 							<input type="button" class="button tiny radius" id="decrypt" value="Descifrar!">
 						</div>
 					</div>
 				</section>
-
 				<a class="exit-off-canvas"></a>
-
 			</div>
 		</div>
 		<script>

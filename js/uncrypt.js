@@ -1,5 +1,6 @@
 var uncrypt = {}
 uncrypt.displacement = {}
+uncrypt.substitution = {}
 
 uncrypt.convertStringToCodes = function(plaintext){
 	var codes = []
@@ -42,4 +43,34 @@ uncrypt.displacement.decrypt = function(ciphertext, key){
 	}
 	plaintext = uncrypt.convertCodesToString(codes);
 	return plaintext;
+}
+
+uncrypt.substitution.crypt = function(plaintext, key){
+	var ciphertext = "";
+	plaintext = plaintext.trim().replace(/ /g,'').toUpperCase();
+	for(var i=0; i<key.length;i++){
+		key[i]=key[i].toUpperCase()	
+	}
+
+	for(var i=0;i<plaintext.length;i++){
+		ciphertext += key[plaintext.charCodeAt(i)-65]
+	}
+	
+	return ciphertext;
+}
+
+uncrypt.substitution.decrypt = function(ciphertext, key){
+	var plaintext = "";
+	ciphertext = ciphertext.trim().replace(/ /g,'').toUpperCase();
+	cipher_codes = []
+	for(var i=0; i<key.length;i++){
+		key[i]=key[i].toUpperCase()	
+	}
+
+	for(var i=0;i<ciphertext.length;i++){
+		cipher_codes.push(key.indexOf(ciphertext.charAt(i)))
+	}
+
+	ciphertext = uncrypt.convertCodesToString(cipher_codes);
+	return ciphertext
 }
