@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Introducción a la criptografía y a la seguridad de la información</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href='http://fonts.googleapis.com/css?family=Karma:400,300,500,600,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="/css/foundation.css">
 		<link rel="stylesheet" type="text/css" href="/css/normalize.css">
 		<link rel="stylesheet" type="text/css" href="/css/style.css">
 		<script src="/js/jquery-1.11.3.js"></script>
 		<script src="/js/foundation.min.js"></script>
+		<script type="text/javascript" src="/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script src="/js/uncrypt.js"></script>
+		<script src="/js/displacementattack.js"></script>
+		<script>
+			MathJax.Hub.Config({
+				"HTML-CSS": {
+					preferredFont: "Gyre-Termes"
+				},
+				tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+			});
+		</script>
 	</head>
 	<body>
 		<div class="off-canvas-wrap" data-offcanvas>
@@ -25,6 +36,8 @@
 
 				<aside class="left-off-canvas-menu">
 					<ul class="off-canvas-list">
+						<li><label>Ir al inicio</label></li>
+						<li><a href="/">Home</a></li>
 						<li><label>Ver un sistema</label></li>
 						<li><a href="/ver/desplazamiento">Sistema de desplazamiento</a></li>
 						<li><label>Atacar un sistema</label></li>
@@ -35,20 +48,31 @@
 				<section class="main-section">
 					<div class=="row">
 						<div class="large-12 columns text-justify">
-							<img src="images/bg.png" alt="" style="width:100%">
-							<h2>
-								Bienvenido.	
+							<h2 class="mayus bold">
+								Ataque al sistema de desplazamiento
 							</h2>
+							<img src="/images/caesar.png" alt="" style="width:50%; margin: auto; text-align: center; display: block;">
+							<p>
+								El ataque al sistema de desplazamiento se puede hacer con una búsqueda exhaustiva de la clave. A continuación puede ingresar el texto cifrado y se le mostrarán los posibles textos en claro que se pueden obtener a partir del texto ingresado.
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="columns large-6">
+							<h4 class="mayus bold">
+								Texto Cifrado
+							</h4>
+							<textarea name="" id="ciphertext" class="radius" cols="50" rows="10" value=""></textarea>
 							<br>
-							<h5>
-								Este es un proyecto con fines netamente académicos, presentado para la asignatura Introducción a la criptografía y a la seguridad de la información	
-								<br>
-								<br>
-								Por favor seleccione una opción del menú lateral.
-								<br>
-								<br>
-								Bajo la opción <b><i>Ver un sistema</i></b> podrá ver cómo funciona un determinado sistema criptográfico, cifrar y descifrar mensajes. Mientras que bajo la opción <b><i>Atacar un sistema</i></b> podrá usar las debilidades de un sistema criptográfico para atacarlo y obtener los posibles textos en plano, teniendo un texto cifrado.
-							</h5>
+							<input type="button" class="button tiny radius" id="attack" value="Atacar!">
+						</div>
+						<div class="columns large-6">
+							<h4 class="mayus bold">
+								Textos en claro
+							</h4>
+							<p id="plaintext">
+								
+							</p>
 						</div>
 					</div>
 				</section>
