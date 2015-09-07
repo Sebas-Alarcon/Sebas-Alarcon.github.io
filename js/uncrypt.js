@@ -2,6 +2,10 @@ var uncrypt = {}
 uncrypt.displacement = {}
 uncrypt.substitution = {}
 uncrypt.affine = {}
+uncrypt.vigenere = {}
+
+// Utilities
+
 uncrypt.inverse = {
 	1:1,
 	3:9,
@@ -40,6 +44,9 @@ uncrypt.gcd = function(a, b) {
     return uncrypt.gcd(b, a % b);
 }
 
+
+// Displacement system
+
 uncrypt.displacement.crypt = function(plaintext, key){
 	var cipher_codes = [];
 	var ciphertext;
@@ -66,6 +73,9 @@ uncrypt.displacement.decrypt = function(ciphertext, key){
 	plaintext = uncrypt.convertCodesToString(codes);
 	return plaintext;
 }
+
+
+// Substitution system
 
 uncrypt.substitution.crypt = function(plaintext, key){
 	var ciphertext = "";
@@ -97,6 +107,9 @@ uncrypt.substitution.decrypt = function(ciphertext, key){
 	return ciphertext
 }
 
+
+// Affine system
+
 uncrypt.affine.crypt = function(plaintext,a,b){
 	var ciphertext;
 	var cipher_codes = [];
@@ -117,6 +130,40 @@ uncrypt.affine.decrypt = function(ciphertext,a,b){
 
 	for(var i = 0; i < cipher_codes.length; i++ ){
 		value = uncrypt.inverse[a]*(cipher_codes[i]-b)
+		codes.push(((value%26)+26)%26)	
+	}
+	plaintext = uncrypt.convertCodesToString(codes)
+	return plaintext;
+}
+
+// Vigenere system
+
+uncrypt.vigenere.crypt = function(plaintext, key){
+	var ciphertext = "";
+	var cipher_codes = [];
+	plaintext = plaintext.trim().replace(/ /g,'').toUpperCase();
+	key = key.trim().replace(/ /g,'').toUpperCase();
+	var codes = uncrypt.convertStringToCodes(plaintext)
+	var key_codes = uncrypt.convertStringToCodes(key)
+	var keylength = key_codes.length;
+
+	for(var i = 0; i < codes.length; i++ ){
+		cipher_codes.push( (codes[i] +  key_codes[i%keylength]) % 26 )
+	}
+	ciphertext = uncrypt.convertCodesToString(cipher_codes);
+	return ciphertext;
+}	
+
+uncrypt.vigenere.decrypt = function(ciphertext, key){
+	var plaintext = "";
+	var codes = [];
+	ciphertext = ciphertext.trim().replace(/ /g,'').toUpperCase();
+	key = key.trim().replace(/ /g,'').toUpperCase();
+	var cipher_codes = uncrypt.convertStringToCodes(ciphertext)
+	var key_codes = uncrypt.convertStringToCodes(key)
+	var keylength = key_codes.length;
+	for(var i = 0; i < cipher_codes.length; i++ ){
+		value = cipher_codes[i] - key_codes[i%keylength]
 		codes.push(((value%26)+26)%26)	
 	}
 	plaintext = uncrypt.convertCodesToString(codes)

@@ -3,7 +3,7 @@
 	<head>
 		<link rel="import" href="/templates/temp_head.html">		
 		<script type="text/javascript" src="/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-		<script src="/js/substitution.js"></script>
+		<script type="text/javascript" src="/js/vigenere.js"></script>
 		<script>
 			MathJax.Hub.Config({
 				"HTML-CSS": {
@@ -24,19 +24,22 @@
 					<div class=="row">
 						<div class="large-12 columns text-justify">
 							<h2 class="mayus bold">
-								Sistema de sustitución
+								Sistema Vigenere
 							</h2>
-							<img src="/images/substitution.jpg" alt="" style="width:50%; margin: auto; text-align: center; display: block;">
+							<img src="/images/vigenere.jpg" alt="" style="width:25%; margin: auto; text-align: center; display: block;">
+							<br>
 							<p>
-								Para este sistema se tiene:
+								Para $ m $ fijo, en este Criptosistema se tiene:
 								<br>
 								<ul>
-									<li>$ \rho=\varsigma=\mathbb{Z}_{26} $</li>
-									<li>$ \kappa $, consta de todas las permutaciones que pueden definirse entre 26 elementos. Notamos tal conjunto $ S_{26} $, luego para cada $\pi \in S_{26}$, definimos</li>
-									<p style="text-align:center">$ e_{\pi}(x) = \pi(x)$</p>
-									<p style="text-align:center">$ d_{\pi}(y) = \pi^{-1}(y)$</p>
-									<br>
-									en donde $ \pi^{-1} $ es la permutación inversa de $\pi$.
+								    <li>$ \rho=\varsigma=\kappa=\mathbb{Z}^{m}_{26} $</li>
+								    <br>
+								    Cada texto claro, texto cifrado o clave es una $m$-tupla del tipo $ x=(x_1, x_2,..., x_m), y=(y_1,y_2,...,y_m), (k_1,k_2,...,k_m) $
+								    <br>
+								    <br>
+								    Si $ K = (k_1,k_2,...,k_m) \in \kappa $, entonces:
+								    <p style="text-align:center">$ e_K(x) = (x_1 + k_1 , x_2 + k_2 , ... , x_m + k_m ) $</p>
+								    <p style="text-align:center">$ d_K(y) = (y_1 + k_1 , y_2 + k_2 , ... , y_m + k_m ) $</p>
 								</ul>
 							</p>
 						</div>
@@ -55,9 +58,7 @@
 									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABlElEQVRIS82VzVECQRCF39uDXglhIQKIQIhAPADeJAMwAjECIQKXm7tcMAIhAjEBds0Aj2rVtDXDgsvPzvIjVc5tqnr6e/26u4bY4UjNbYJsgSyacJEJIF0GUT/rOW0BUnVzOOPLMvF6sAZ9SYXDaJaWxw6o50cgL+wqZUQ/rOwNMLY4zuPyocgYjnTMXbGzAhZ1xSAaboOkViD1vAfyJvZ8zCAsJxNIsjqRPoOwuS/g1x7BPYPpXH18pF7ogLhLE7CIs1VwYkCj0AXQihXO4EiJT1FkpvTadaH4CjIXK+3Rn7b3s0gnESdMNHkGcDS/SzmRHKDKL+DrkIwxTficPqu39Ke62q3HCjBaGwVd+sPGa8EHRLU5iLx0NpAJMBC90ef0AF7GFj3jU5q2Dc6conVVq2O5ObYHW7R97k8NADwo5eEbb1k27dQD04fk5i7LkgmDsHR0k1MBAOhPrSKPqEDeAXZtO6CFHQrQPehxEE1s9hwDiPPaP5s/AJy0B+bzT/1o/uEm19wiHM7/XSXVXRqsQ38A9mvOGRv15YoAAAAASUVORK5CYII="/>
 									Clave
 								</h4>
-								<h6 class="text-justify">La clave debe incluir los 26 caracteres del alfabeto inglés, cada uno separado por un coma y cada posición indicará por cuál caracter será sustituido el caracter del alfabeto original.</h6>
-								<p style="margin-bottom: 0">&nbsp;&nbsp;A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z</p>
-								<input type="text" id="cipher_key" style="text-transform:uppercase">
+								<input type="text" name="" id="cipher_key">
 							</label>
 							<input type="button" class="button tiny radius" id="crypt" value="Cifrar!">
 						</div>
@@ -73,9 +74,7 @@
 									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABlElEQVRIS82VzVECQRCF39uDXglhIQKIQIhAPADeJAMwAjECIQKXm7tcMAIhAjEBds0Aj2rVtDXDgsvPzvIjVc5tqnr6e/26u4bY4UjNbYJsgSyacJEJIF0GUT/rOW0BUnVzOOPLMvF6sAZ9SYXDaJaWxw6o50cgL+wqZUQ/rOwNMLY4zuPyocgYjnTMXbGzAhZ1xSAaboOkViD1vAfyJvZ8zCAsJxNIsjqRPoOwuS/g1x7BPYPpXH18pF7ogLhLE7CIs1VwYkCj0AXQihXO4EiJT1FkpvTadaH4CjIXK+3Rn7b3s0gnESdMNHkGcDS/SzmRHKDKL+DrkIwxTficPqu39Ke62q3HCjBaGwVd+sPGa8EHRLU5iLx0NpAJMBC90ef0AF7GFj3jU5q2Dc6conVVq2O5ObYHW7R97k8NADwo5eEbb1k27dQD04fk5i7LkgmDsHR0k1MBAOhPrSKPqEDeAXZtO6CFHQrQPehxEE1s9hwDiPPaP5s/AJy0B+bzT/1o/uEm19wiHM7/XSXVXRqsQ38A9mvOGRv15YoAAAAASUVORK5CYII="/>
 									Clave
 								</h4>
-								<h6 class="text-justify">La clave debe incluir los 26 caracteres del alfabeto inglés, cada uno separado por un coma y cada posición indicará por cuál caracter será sustituido el caracter del alfabeto original.</h6>
-								<p style="margin-bottom: 0">&nbsp;&nbsp;A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z</p>
-								<input type="text" id="decipher_key" style="text-transform:uppercase">
+								<input type="text" name="" id="decipher_key">
 							</label>
 							<input type="button" class="button tiny radius" id="decrypt" value="Descifrar!">
 						</div>
