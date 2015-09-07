@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="import" href="/templates/temp_head.html">		
+		<script type="text/javascript" src="/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script type="text/javascript" src="/js/hill.js"></script>
+		
+		<script>
+			MathJax.Hub.Config({
+				"HTML-CSS": {
+					preferredFont: "Gyre-Termes"
+				},
+				tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+			});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap" data-offcanvas>
+			<div class="inner-wrap">
+				<nav id="bar" class="tab-bar"></nav>
+
+				<aside id="menu" class="left-off-canvas-menu"></aside>
+
+				<section class="main-section">
+					<div class=="row">
+						<div class="large-12 columns text-justify">
+							<h2 class="mayus bold">
+								Sistema de Hill (Para texto)
+							</h2>
+							<img src="/images/hill.png" alt="" style="width:40%; margin: auto; text-align: center; display: block;">
+							<br>
+							<p>
+								Info sistema
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="columns large-6">
+							<h4 class="mayus bold">
+								Cifrar 
+								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAC4UlEQVRIS81W220aURA9Z4MfkVjLrsCXCqADkwqyriDk0/BhqABcgdcf4E+TCkIqCK4gdJDbgTcskR0nYqK5d3dZiCXbUl78gEZz53HmnBlohosGKOcgpvYkPEP2McNFC1wmtr03KdkagES2Ew5WtjQGcQjhme1UZ2o3w3QA4gjCHmujeSJAi4JYEETqpMFJuRLBWR5MCyGXUwFnth02faBFSxOCnEKkaTth5PywnAjRJTBmbZTK53ZIM0qnIAb2JJxmDxsAkiLBaB4BgXEdFAlS14n66Hu1m8u0CcFAf2vsBxMUbWaPCzhKjzd9/mWCeSISNAG5Avh2bVCPdTBadAHRYX4ApeUg8qQZQ9jSmdE4bNmFYGY7YTdrXZmhMwAgsTLJ+GCRt3Fi29XYnMs+dtIYoIGwWyouey8xc3z/1LdLYC5vDe52E9tjssb54EViT17acnL1/cU2XDTy6l0819mibtvhNR1mWH5EwGOlaAmiJiFGuNXIA5rRfKxw5DR1vmoTvLadvYM8OLfTmdAVe8PacG5VPAgQFwlUE9+qEbYV94znXp06g2RNaBQVVF215NHY0EHB58CtCt9BLhoNWmJS+XEZtlys/1eCTYg2q3tyB35wbvMlCCrHOlAzVG7jiJADCbaazqZ6EfYBMUDQs53qOIOsT6CZL0ZlkBsyeAPii2dRIPuuorvqLKeqt69o6qiMH8ZXXrEuqdJxV1kIYMmkEFpm15n+JaE5SDheE4vb9UrRqkLoPtkaN+sHx+2evm2Hxys/d4TqgFzoLhoTiISMVkJ74OCM5hHB9wJcl3TgjgvIww0dxKtl56+SQVkH3vaEg+PxJ+XTs4RWiO+RdZ1D8myh/dYE2bI7BYKZ7VQvvKBuDZbf+67C+7Cn1HWU3P76BpAW7quvCtvOok5gKqzUvIayoy84ZYB3NMN0AsLrgJVWJjRdbO6fQ3Fw3N8YccyCOMaNi2PlbGsHy78Xdn8CbvKZqPY1AqQAAAAASUVORK5CYII="/>
+							</h4>
+
+							<textarea name="" id="plaintext" class="radius" cols="50" rows="10" value=""></textarea>
+							<br>
+							<label>
+								<h4>
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABlElEQVRIS82VzVECQRCF39uDXglhIQKIQIhAPADeJAMwAjECIQKXm7tcMAIhAjEBds0Aj2rVtDXDgsvPzvIjVc5tqnr6e/26u4bY4UjNbYJsgSyacJEJIF0GUT/rOW0BUnVzOOPLMvF6sAZ9SYXDaJaWxw6o50cgL+wqZUQ/rOwNMLY4zuPyocgYjnTMXbGzAhZ1xSAaboOkViD1vAfyJvZ8zCAsJxNIsjqRPoOwuS/g1x7BPYPpXH18pF7ogLhLE7CIs1VwYkCj0AXQihXO4EiJT1FkpvTadaH4CjIXK+3Rn7b3s0gnESdMNHkGcDS/SzmRHKDKL+DrkIwxTficPqu39Ke62q3HCjBaGwVd+sPGa8EHRLU5iLx0NpAJMBC90ef0AF7GFj3jU5q2Dc6conVVq2O5ObYHW7R97k8NADwo5eEbb1k27dQD04fk5i7LkgmDsHR0k1MBAOhPrSKPqEDeAXZtO6CFHQrQPehxEE1s9hwDiPPaP5s/AJy0B+bzT/1o/uEm19wiHM7/XSXVXRqsQ38A9mvOGRv15YoAAAAASUVORK5CYII="/>
+									Clave
+								</h4>
+								<h6 class="text-justify">Primero se debe asignar una partición para la matriz que desea usar como clave. Ingrese un valor para el tamaño de la matriz y después haga clic en 'Asignar partición'</h6>
+								<input type="number" name="" value="2" placeholder="" id="mpartition">
+								<input type="button" class="button tiny radius" id="set_partition" value="Asignar partición">
+								<div id="cipher_matrix"></div>
+							</label>
+							<input type="button" class="button tiny radius" id="crypt" value="Cifrar!">
+						</div>
+						<div class="columns large-6">
+							<h4 class="mayus bold">
+								Descifrar
+								<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACnklEQVRIS61W0XHaQBB9j/HYyUQipIIcFYR0gCswdIA/Iz6MKwgdRD+SP4MriDowHViugHMHNiITY0/YzN4hBxhIhBP9wJ7u9u3u230nYuVpJlM76deNSWcDiDRsPxyatBhDOPDbZGj7Ycek0xGkNrb9YLR6ftt/OmeQE31JoC3AGBDjN9NCpOV+PYABmbs14m65fmejsFs6N0kxBPEBPDi3n15bugjBDJScgishjiHS8/45giAGuIxUeiAGfk1yfa9nJlFI3e6cQ84AXpLSE6m1PQAxtJ/CsUmK2PbDgUlmLXBhbFTPXIbzNyO8emhAfnZsFMQmmWkAue0HeTMtRAHMRdGmSCbCMYD3oNwANGsAf6vntvcKIPPgHY6Ka1/FWheQDonPAun+HwAgg+AWYE4uYhFONAMb1XubJcpAvK2UCQ9OlUSXAXCDedC257xbktwp7XWAi6JdyblueghyHH435GKsZCofyh0p1yL8qLbrkzWSFUAgO0GE9+VB80UaOJxdgbx0xG/YpY9tJWrsBtDOCd3Q+WGjDmNnm70VoGp5TDrtUBDLY9hydd+wV/2sZdBMpzqdlUgu62wufhgsnq5RY1dnaTPIvdvUpEUOQaY65Uuzbv8TgE46iJaNQtdt2pI6UKVU7BC731LxJw6epWAeGlf3pTRoSSsD6KHnNuXBrQ6Si9S1YDEBcer0acUm+K06QFLoJC/bVGJ1tixFDMqJ6owbKHdH+JYtxW5X9pVI1otIwMxJMHgFoGmjsKVO9wIo21SEp+VtpW1IecplHhoczb4SclxKw94A29L0N97izEsxb/AY9JTkcu9eGRjPwfqgibQI3AsxKDlZDWQ/gF1q+hDkq1G/GKCqFu0HkBQZCfdV8bJH7idRfacC/wJf9fli2PMdhQAAAABJRU5ErkJggg=="/>
+							</h4>
+							<textarea name="" id="ciphertext" class="radius" cols="50" rows="10" value=""></textarea>	
+							<br>
+							<!--
+							<label>
+								
+								<h4>
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABlElEQVRIS82VzVECQRCF39uDXglhIQKIQIhAPADeJAMwAjECIQKXm7tcMAIhAjEBds0Aj2rVtDXDgsvPzvIjVc5tqnr6e/26u4bY4UjNbYJsgSyacJEJIF0GUT/rOW0BUnVzOOPLMvF6sAZ9SYXDaJaWxw6o50cgL+wqZUQ/rOwNMLY4zuPyocgYjnTMXbGzAhZ1xSAaboOkViD1vAfyJvZ8zCAsJxNIsjqRPoOwuS/g1x7BPYPpXH18pF7ogLhLE7CIs1VwYkCj0AXQihXO4EiJT1FkpvTadaH4CjIXK+3Rn7b3s0gnESdMNHkGcDS/SzmRHKDKL+DrkIwxTficPqu39Ke62q3HCjBaGwVd+sPGa8EHRLU5iLx0NpAJMBC90ef0AF7GFj3jU5q2Dc6conVVq2O5ObYHW7R97k8NADwo5eEbb1k27dQD04fk5i7LkgmDsHR0k1MBAOhPrSKPqEDeAXZtO6CFHQrQPehxEE1s9hwDiPPaP5s/AJy0B+bzT/1o/uEm19wiHM7/XSXVXRqsQ38A9mvOGRv15YoAAAAASUVORK5CYII="/>
+									Clave
+								</h4>
+								<h6 class="text-justify">Primero se debe asignar una partición para la matriz que desea usar como clave. Ingrese un valor para el tamaño de la matriz y después haga clic en 'Asignar partición'</h6>
+								<input type="number" name="" value="2" placeholder="" id="dempartition">
+								<input type="button" class="button tiny radius" id="de_set_partition" value="Asignar partición">
+								<div id="decipher_matrix"></div>
+								
+							</label>
+							<input type="button" class="button tiny radius" id="decrypt" value="Descifrar!">
+							-->
+							<h6>El problema de invertir una matriz mayor a tamaño 3 se hace muy complicado, no sólo por saber si la matriz es inversible, sino al momento de calcular la matriz adjunta de la matriz clave. Se espera implementar alguna solución pronto</h6>
+						</div>
+					</div>
+				</section>
+				<a class="exit-off-canvas"></a>
+			</div>
+		</div>
+		<script>
+			$(document).foundation();
+			$( "#menu" ).load( "/templates/temp_menu.html" );
+			$( "#bar" ).load( "/templates/temp_bar.html" );
+		</script>
+	</body>
+</html>

@@ -3,6 +3,7 @@ uncrypt.displacement = {}
 uncrypt.substitution = {}
 uncrypt.affine = {}
 uncrypt.vigenere = {}
+uncrypt.hill = {}
 
 // Utilities
 
@@ -168,4 +169,23 @@ uncrypt.vigenere.decrypt = function(ciphertext, key){
 	}
 	plaintext = uncrypt.convertCodesToString(codes)
 	return plaintext;
+}
+
+// Hill system
+
+uncrypt.hill.crypt = function(plaintext, matrix){
+	var ciphertext;
+	var cipher_codes = []
+	plaintext = plaintext.trim().replace(/ /g,'').toUpperCase();
+	var codes = uncrypt.convertStringToCodes(plaintext)
+	var partition = matrix.size()[0]
+	for(var i = 0 ; i<codes.length ; i=i+partition){
+		row = codes.slice(i, i+partition)
+		result = math.multiply(row, matrix);
+		result.map(function (value, index, matrix) {
+			return cipher_codes.push(((value%26)+26)%26)
+		})
+	}
+	ciphertext = uncrypt.convertCodesToString(cipher_codes);
+	return ciphertext
 }
