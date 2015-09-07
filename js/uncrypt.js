@@ -1,6 +1,20 @@
 var uncrypt = {}
 uncrypt.displacement = {}
 uncrypt.substitution = {}
+uncrypt.affine = {}
+uncrypt.inverse = {
+	1:1,
+	3:9,
+	5:21,
+	7:15,
+	9:3,
+	11:19,
+	15:7,
+	17:23,
+	19:11,
+	23:17,
+	25:25
+}
 
 uncrypt.convertStringToCodes = function(plaintext){
 	var codes = []
@@ -18,17 +32,25 @@ uncrypt.convertCodesToString = function(codes){
 	return chars.join('');	
 }
 
+uncrypt.gcd = function(a, b) {
+    if ( ! b) {
+        return a;
+    }
+
+    return uncrypt.gcd(b, a % b);
+}
+
 uncrypt.displacement.crypt = function(plaintext, key){
 	var cipher_codes = [];
-	var cipher_text;
+	var ciphertext;
 	plaintext = plaintext.trim().replace(/ /g,'').toUpperCase()
 	var codes = uncrypt.convertStringToCodes(plaintext)
 	
 	for(var i = 0; i < codes.length; i++ ){
 		cipher_codes.push((codes[i]+key)%26)
 	}
-	cipher_text = uncrypt.convertCodesToString(cipher_codes);
-	return cipher_text;
+	ciphertext = uncrypt.convertCodesToString(cipher_codes);
+	return ciphertext;
 }
 
 uncrypt.displacement.decrypt = function(ciphertext, key){
@@ -62,15 +84,41 @@ uncrypt.substitution.crypt = function(plaintext, key){
 uncrypt.substitution.decrypt = function(ciphertext, key){
 	var plaintext = "";
 	ciphertext = ciphertext.trim().replace(/ /g,'').toUpperCase();
-	cipher_codes = []
+	codes = []
 	for(var i=0; i<key.length;i++){
 		key[i]=key[i].toUpperCase()	
 	}
 
 	for(var i=0;i<ciphertext.length;i++){
-		cipher_codes.push(key.indexOf(ciphertext.charAt(i)))
+		codes.push(key.indexOf(ciphertext.charAt(i)))
 	}
 
-	ciphertext = uncrypt.convertCodesToString(cipher_codes);
+	ciphertext = uncrypt.convertCodesToString(codes);
 	return ciphertext
+}
+
+uncrypt.affine.crypt = function(plaintext,a,b){
+	var ciphertext;
+	var cipher_codes = [];
+	plaintext = plaintext.trim().replace(/ /g,'').toUpperCase();
+	var codes = uncrypt.convertStringToCodes(plaintext)
+	for(var i = 0; i < codes.length; i++ ){
+		cipher_codes.push((codes[i]*a + b)%26)
+	}
+	ciphertext = uncrypt.convertCodesToString(cipher_codes);
+	return ciphertext;
+}
+
+uncrypt.affine.decrypt = function(ciphertext,a,b){
+	var plaintext;
+	var codes = [];
+	ciphertext = ciphertext.trim().replace(/ /g,'').toUpperCase();
+	var cipher_codes = uncrypt.convertStringToCodes(ciphertext)
+
+	for(var i = 0; i < cipher_codes.length; i++ ){
+		value = uncrypt.inverse[a]*(cipher_codes[i]-b)
+		codes.push(((value%26)+26)%26)	
+	}
+	plaintext = uncrypt.convertCodesToString(codes)
+	return plaintext;
 }
