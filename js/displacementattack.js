@@ -5,7 +5,6 @@ $(document).ready(function(){
 		if(ciphertext==""){
 			alert("Por favor, escribe un texto para ser descifrado");
 		}else{
-			console.log(ciphertext)
 			for(var i = 0; i<26;i++){
 				plaintext.push(uncrypt.displacement.decrypt(ciphertext, i));	
 			}

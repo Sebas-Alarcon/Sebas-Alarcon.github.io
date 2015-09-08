@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Introducción a la criptografía y a la seguridad de la información</title>
+		<link href='http://fonts.googleapis.com/css?family=Karma:400,300,500,600,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="/css/foundation.css">
+		<link rel="stylesheet" type="text/css" href="/css/normalize.css">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<script src="/js/jquery-1.11.3.js"></script>
+		<script src="/js/foundation.min.js"></script>
+		<script type="text/javascript" src="/js/math.min.js"></script>
+		<script src="/js/uncrypt.js"></script>
+		<script type="text/javascript" src="/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+		<script src="/js/affineattack.js"></script>
+		<script>
+			MathJax.Hub.Config({
+				"HTML-CSS": {
+					preferredFont: "Gyre-Termes"
+				},
+				tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+			});
+		</script>
+	</head>
+	<body>
+		<div class="off-canvas-wrap" data-offcanvas>
+			<div class="inner-wrap">
+				<nav id="bar" class="tab-bar"></nav>
+
+				<aside id="menu" class="left-off-canvas-menu"></aside>
+
+				<section class="main-section">
+					<div class=="row">
+						<div class="large-12 columns text-justify">
+							<h2 class="mayus bold">
+								Ataque al sistema Afín
+							</h2>
+							<img src="/images/affine.jpg" alt="" style="width:50%; margin: auto; text-align: center; display: block;">
+							<br>
+							<p class="text-justify">
+								Como lo hemos descrito, una vez definido $ n = 26 $, para una clave afín, fácilmente se puede realizar una busqueda exhaustiva de la clave, por supuesto si $ n $ es grande el método resulta complicado. Por lo que en este caso es mejor atacar un texto cifrado afín realizando un análisis estadístico de frecuencia. En este caso debemos hipotetizar que se esta cifrando un texto de lenguaje conocido, para el que hay caracteres mas frecuentes y menos frecuentes.
+								<br>
+								<br>
+								<i>Esta herramienta le proveerá una lista de frecuencias para que usted pueda hacer el ataque. Una vez la herramienta provea la lista de frecuencias, defina un sistema de congruencias. El sistema lo resolverá y le informará si la clave es legal. En caso de serlo se descifrará el texto con la clave obtenida.</i>
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="columns large-6">
+							<h4 class="mayus bold">
+								Texto Cifrado
+							</h4>
+							<textarea name="" id="ciphertext" class="radius" cols="50" rows="10" value=""></textarea>
+							<br>
+							<input type="button" class="button tiny radius" id="attack" value="Analizar!">
+							<br>
+							<input type="number" name="" value="" style="width: 60px;display:inline-block" placeholder="" id="a1">$ a+b= $ <input type="number" name="" value=""  style="width: 60px;display:inline-block" placeholder="" id="b1">
+							<br>
+							<input type="number" name="" value="" style="width: 60px;display:inline-block" placeholder="" id="a2">$ a+b= $ <input type="number" name="" value=""  style="width: 60px;display:inline-block" placeholder="" id="b2">
+							<br>
+							<input type="button" class="button tiny radius" id="solve" value="Resolver!">
+						</div>
+						<div class="columns large-6">
+							<h4 class="mayus bold">
+								Análisis de frecuencia
+							</h4>
+							<div id="freq_analysis"></div>
+							<div id="bigram_analysis"></div>
+							<div id="trigram_analysis"></div>
+							<h4 class="mayus bold">
+								Clave Obtenida
+							</h4>
+							<div id="key"></div>
+							<h4 class="mayus bold">
+								Texto descifrado
+							</h4>
+							<div id="plaintext"></div>
+						</div>
+					</div>
+				</section>
+
+				<a class="exit-off-canvas"></a>
+
+			</div>
+		</div>
+		<script>
+			$(document).foundation();
+			$( "#menu" ).load( "/templates/temp_menu.html" );
+			$( "#bar" ).load( "/templates/temp_bar.html" );
+		</script>
+	</body>
+</html>
