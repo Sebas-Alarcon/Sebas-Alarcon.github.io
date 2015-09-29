@@ -6,7 +6,7 @@
 */
 
 /*
-	Some of the functions wasn't written by me. Before a function wasn't written by me I put the corresponding authoringand rights note with name and repository
+	Some of the functions wasn't written by me. Before a function wasn't written by me I put the corresponding authoring and rights note with name and repository
 */
 
 var uncrypt = {
@@ -27,6 +27,72 @@ var uncrypt = {
         'Y': .020, 'Z': .001
     },
 
+    randomArray : function(min,max){
+		return (new Array(max-min))
+		.join(',').split(',')
+		.map(function(v,i){ return [Math.random(), min + i]; })
+		.sort().map(function(v) { return v[1]; });
+	},
+
+	rotate : function( array , times ){
+		while( times-- ){
+			var temp = array.shift();
+			array.push( temp )
+		}
+		return array;
+	},
+
+	apply_permutation : function (original_array, permutation_array){
+		var result = []
+		for(i = 0; i<permutation_array.length; i++){
+			index = parseInt(permutation_array[i])-1
+			result.push(original_array[index])
+		}
+		return result;
+	},
+
+	pad : function(n, width, z) {
+		z = z || '0';
+		n = n + '';
+		return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+	},
+
+	convertBinary : function(input) {
+		output = "";
+		for (i=0; i < input.length; i++) {
+			var e=input[i].charCodeAt(0);var s = "";
+			do{
+				var a =e%2;
+				e=(e-a)/2;
+				s=a+s;
+        	}while(e!=0);
+			while(s.length<8){s="0"+s;}
+        	output+=s;
+    	}
+		return output;
+	},
+	toAscii: function(bin) {
+		return bin.replace(/\s*[01]{8}\s*/g, function(bin) {
+			return String.fromCharCode(parseInt(bin, 2))
+		})
+	},
+	hex2bin : function (hex){
+		var bytes = [], str;
+
+		for(var i=0; i< hex.length-1; i+=2)
+			bytes.push(parseInt(hex.substr(i, 2), 16));
+
+		return String.fromCharCode.apply(String, bytes);    
+	},
+
+	bin2hex : function (bin){
+		var i = 0, l = bin.length, chr, hex = ''
+		for (i; i < l; ++i){
+			chr = bin.charCodeAt(i).toString(16)
+			hex += chr.length < 2 ? '0' + chr : chr
+		}
+		return hex
+	},
 	gcd : function(a, b) {
 		if ( ! b) {
 			return a;
@@ -390,6 +456,318 @@ var uncrypt = {
 			}
 			ciphertext = uncrypt.convertCodesToString(cipher_codes);
 			return ciphertext
+		}
+	},
+
+	s_des:{
+		generate_key : function(){
+			var key = []
+			for (var i = 0; i<10;i++){
+				key.push(Math.floor(Math.random() * (1 - 0 + 1)) + 0);	
+			}
+			return key;
+		},
+		calc_key_itinerary : function(key, p10, p8){
+			key = key.split(" ")
+			p10 = p10.split(" ")
+			p8 = p8.split(" ")
+			var k1=[];
+			var k2=[];
+			var left = [];
+			var right = []
+
+			k1 = k2 = uncrypt.apply_permutation(key, p10)
+
+			k1_left = k1.slice(0,5)
+			k1_right = k1.slice(5,10)
+			k1 = []
+			k1 = k1.concat(uncrypt.rotate(k1_left, 1));
+			k1 = k1.concat(uncrypt.rotate(k1_right, 1));
+
+			k2_left = k1.slice(0,5)
+			k2_right = k1.slice(5,10)
+			k2 = []
+			k2 = k2.concat(uncrypt.rotate(k2_left, 2));
+			k2 = k2.concat(uncrypt.rotate(k2_right, 2));
+
+			k1 = uncrypt.apply_permutation(k1, p8)			
+			k2 = uncrypt.apply_permutation(k2, p8)			
+
+			return [k1,k2];
+		},
+		crypt : function(plaintext, key, p10, p8, ip, s0, s1, p4, pe){
+			plaintext = plaintext.trim();
+			var resultArray = []
+			var resultCipher = []
+			for (var i = 0; i < plaintext.length; i++) {
+				resultCipher.push(uncrypt.convertBinary(plaintext[i]))	
+			}
+
+			itinerary = uncrypt.s_des.calc_key_itinerary(key, p10, p8)
+			k1 = itinerary[0]
+			k2 = itinerary[1]
+			ip = ip.split(" ")
+			pe = pe.split(" ")
+			p4 = p4.split(" ")
+			ip_inv = []
+			for(i = 0; i<ip.length;i++){
+   				ip_inv.push(ip.indexOf(""+(i+1))+1)
+			}
+
+			for(i = 0; i<resultCipher.length;i++){
+				ciphertext = []
+				ciphertext = uncrypt.apply_permutation(resultCipher[i], ip)
+				left_temp = ciphertext.slice(0,4)
+				right_temp = right_temp2 = ciphertext.slice(4,8)
+				right_temp2 = uncrypt.apply_permutation(right_temp2, pe)
+				var sum_k1_r = k1.map(function (num, idx) {
+					sum =(parseInt(num)+ parseInt(right_temp2[idx]))%2
+					return sum;
+				});
+				s0_pos = [""+sum_k1_r[0]+sum_k1_r[3],""+sum_k1_r[1]+sum_k1_r[2]]
+				s0_row = parseInt(s0_pos[0], 2)
+				s0_col = parseInt(s0_pos[1], 2)
+
+				s1_pos = [""+sum_k1_r[4]+sum_k1_r[7],""+sum_k1_r[5]+sum_k1_r[6]]
+				s1_row = parseInt(s1_pos[0], 2)
+				s1_col = parseInt(s1_pos[1], 2)
+
+				s0_result =s0[s0_row][s0_col]
+				s1_result =s1[s1_row][s1_col]
+
+				ciphertext = uncrypt.pad((parseInt(s0_result)).toString(2),2) + uncrypt.pad((parseInt(s1_result)).toString(2),2)
+				ciphertext = uncrypt.apply_permutation(ciphertext,p4)
+
+				ciphertext = ciphertext.map(function (num, idx) {
+					sum =(parseInt(num)+ parseInt(left_temp[idx]))%2
+					return sum.toString();
+				});
+				ciphertext = ciphertext.concat(right_temp);
+				// END FIRST ROUND
+				ciphertext = ciphertext.concat(ciphertext.splice(0,4))
+
+				left_temp = ciphertext.slice(0,4)
+				right_temp = right_temp2 = ciphertext.slice(4,8)
+				right_temp2 = uncrypt.apply_permutation(right_temp2, pe)
+
+				var sum_k1_r = k2.map(function (num, idx) {
+				 	sum =(parseInt(num)+ parseInt(right_temp2[idx]))%2
+					return sum;
+				});
+				s0_pos = [""+sum_k1_r[0]+sum_k1_r[3],""+sum_k1_r[1]+sum_k1_r[2]]
+				s0_row = parseInt(s0_pos[0], 2)
+				s0_col = parseInt(s0_pos[1], 2)
+				
+				s1_pos = [""+sum_k1_r[4]+sum_k1_r[7],""+sum_k1_r[5]+sum_k1_r[6]]
+				s1_row = parseInt(s1_pos[0], 2)
+				s1_col = parseInt(s1_pos[1], 2)
+
+				s0_result =s0[s0_row][s0_col]
+				s1_result =s1[s1_row][s1_col]
+
+				ciphertext = uncrypt.pad((parseInt(s0_result)).toString(2),2) + uncrypt.pad((parseInt(s1_result)).toString(2),2)
+				ciphertext = uncrypt.apply_permutation(ciphertext,p4)
+				ciphertext = ciphertext.map(function (num, idx) {
+					sum =(parseInt(num)+ parseInt(left_temp[idx]))%2
+					return sum.toString();
+				});
+
+				ciphertext = ciphertext.concat(right_temp);
+				ciphertext = uncrypt.apply_permutation(ciphertext, ip_inv)
+				resultArray.push(ciphertext.join(""))
+			}
+
+			return resultArray
+		},
+
+		decrypt : function(ciphertext, key, p10, p8, ip, s0, s1, p4, pe){
+			ciphertext = ciphertext.trim();
+			var resultArray = []
+			var resultCipher = []
+			for (var i = 0; i < ciphertext.length; i++) {
+				resultCipher.push(uncrypt.convertBinary(ciphertext[i]))	
+			}
+
+			itinerary = uncrypt.s_des.calc_key_itinerary(key, p10, p8)
+			k1 = itinerary[0]
+			k2 = itinerary[1]
+			ip = ip.split(" ")
+			pe = pe.split(" ")
+			p4 = p4.split(" ")
+			ip_inv = []
+			for(i = 0; i<ip.length;i++){
+   				ip_inv.push(ip.indexOf(""+(i+1))+1)
+			}
+
+			for(i = 0; i<resultCipher.length;i++){
+				plaintext = []
+				plaintext = uncrypt.apply_permutation(resultCipher[i], ip)
+				left_temp = plaintext.slice(0,4)
+				right_temp = right_temp2 = plaintext.slice(4,8)
+				right_temp2 = uncrypt.apply_permutation(right_temp2, pe)
+				var sum_k1_r = k2.map(function (num, idx) {
+					sum =(parseInt(num)+ parseInt(right_temp2[idx]))%2
+					return sum;
+				});
+				s0_pos = [""+sum_k1_r[0]+sum_k1_r[3],""+sum_k1_r[1]+sum_k1_r[2]]
+				s0_row = parseInt(s0_pos[0], 2)
+				s0_col = parseInt(s0_pos[1], 2)
+
+				s1_pos = [""+sum_k1_r[4]+sum_k1_r[7],""+sum_k1_r[5]+sum_k1_r[6]]
+				s1_row = parseInt(s1_pos[0], 2)
+				s1_col = parseInt(s1_pos[1], 2)
+
+				s0_result =s0[s0_row][s0_col]
+				s1_result =s1[s1_row][s1_col]
+
+				plaintext = uncrypt.pad((parseInt(s0_result)).toString(2),2) + uncrypt.pad((parseInt(s1_result)).toString(2),2)
+				plaintext = uncrypt.apply_permutation(plaintext,p4)
+
+				plaintext = plaintext.map(function (num, idx) {
+					sum =(parseInt(num)+ parseInt(left_temp[idx]))%2
+					return sum.toString();
+				});
+				plaintext = plaintext.concat(right_temp);
+				// END FIRST ROUND
+				plaintext = plaintext.concat(plaintext.splice(0,4))
+
+				left_temp = plaintext.slice(0,4)
+				right_temp = right_temp2 = plaintext.slice(4,8)
+				right_temp2 = uncrypt.apply_permutation(right_temp2, pe)
+
+				var sum_k1_r = k1.map(function (num, idx) {
+				 	sum =(parseInt(num)+ parseInt(right_temp2[idx]))%2
+					return sum;
+				});
+				s0_pos = [""+sum_k1_r[0]+sum_k1_r[3],""+sum_k1_r[1]+sum_k1_r[2]]
+				s0_row = parseInt(s0_pos[0], 2)
+				s0_col = parseInt(s0_pos[1], 2)
+				
+				s1_pos = [""+sum_k1_r[4]+sum_k1_r[7],""+sum_k1_r[5]+sum_k1_r[6]]
+				s1_row = parseInt(s1_pos[0], 2)
+				s1_col = parseInt(s1_pos[1], 2)
+
+				s0_result =s0[s0_row][s0_col]
+				s1_result =s1[s1_row][s1_col]
+
+				plaintext = uncrypt.pad((parseInt(s0_result)).toString(2),2) + uncrypt.pad((parseInt(s1_result)).toString(2),2)
+				plaintext = uncrypt.apply_permutation(plaintext,p4)
+				plaintext = plaintext.map(function (num, idx) {
+					sum =(parseInt(num)+ parseInt(left_temp[idx]))%2
+					return sum.toString();
+				});
+
+				plaintext = plaintext.concat(right_temp);
+				plaintext = uncrypt.apply_permutation(plaintext, ip_inv)
+				resultArray.push(plaintext.join(""))
+			}
+
+			return resultArray
+		}
+
+	},
+
+	des : {
+		keys_left : [],
+		keys_right : [],
+		keys : [],
+		left : [],
+		right: [],
+		calc_key_itinerary : function(key, pc1, pc2){
+			prime_key = uncrypt.apply_permutation(key, pc1)
+			var left = prime_key.slice(0,28)
+			var right = prime_key.slice(28,56)
+			uncrypt.des.keys_left.push(left.slice(0))
+			uncrypt.des.keys_right.push(right.slice(0))
+
+			for(i = 1; i<=16;i++){
+				if(i == 1 || i == 2 || i == 9 || i == 16){
+				 	left = uncrypt.rotate(left, 1)
+				 	right = uncrypt.rotate(right,1)
+
+				 	uncrypt.des.keys_left.push(left.slice(0))
+				 	uncrypt.des.keys_right.push(right.slice(0))
+				}else{
+				 	left = uncrypt.rotate(left, 2)
+				 	right = uncrypt.rotate(right,2)
+					
+				 	uncrypt.des.keys_left.push(left.slice(0))
+					uncrypt.des.keys_right.push(right.slice(0))
+				}
+			}
+
+			for(var i = 1 ; i < uncrypt.des.keys_left.length; i++){
+				var key1 = uncrypt.des.keys_left[i].concat(uncrypt.des.keys_right[i])
+				var key_permutted = uncrypt.apply_permutation(key1,pc2)
+				uncrypt.des.keys.push(key_permutted)
+			}
+		},
+		generate_key: function(length){
+			var ret = "";
+			while (ret.length < length) {
+				ret += Math.random().toString(16).substring(2);
+			}
+			return ret.substring(0,length);
+		},
+		rounds : function(left, right, index, pe, sboxes, p){
+			uncrypt.des.left = right;
+			right = uncrypt.apply_permutation(right, pe)
+
+
+			var sum_kn_r = uncrypt.des.keys[index].map(function (num, idx) {
+				sum =(parseInt(num)+ parseInt(right[idx]))%2
+				return sum;
+			});
+
+			s = 0;
+			provisional_ciphertext = "";
+			for(var i=0; i<48; i+=6){
+				b_n = sum_kn_r.slice(i,i+6)
+				sn_pos = [""+b_n[0]+b_n[5],""+b_n[1]+b_n[2]+b_n[3]+b_n[4]]
+				sn_row = parseInt(sn_pos[0],2)
+				sn_col = parseInt(sn_pos[1],2)
+				provisional_ciphertext += uncrypt.pad((parseInt(sboxes[s][sn_row][sn_col])).toString(2),4)
+				s++;
+			}
+			provisional_ciphertext = uncrypt.apply_permutation(provisional_ciphertext, p)
+			
+
+			uncrypt.des.right = left.map(function (num, idx) {
+				sum =(parseInt(num)+ parseInt(provisional_ciphertext[idx]))%2
+				return sum;
+			});			
+		},
+		crypt : function(plaintext, key, ip, pc1, pc2, pe, p, sboxes , ip_inv){
+			ascii = uncrypt.hex2bin(plaintext)
+			ascii_key = uncrypt.hex2bin(key)
+			binary = uncrypt.convertBinary(ascii)
+			binary_key = uncrypt.convertBinary(ascii_key)
+			ciphertext = uncrypt.apply_permutation(binary, ip)
+			uncrypt.des.calc_key_itinerary(binary_key, pc1, pc2)
+			uncrypt.des.left = ciphertext.slice(0,32)
+			uncrypt.des.right = ciphertext.slice(32,64)
+			for(var i=0;i<15;i++){
+				uncrypt.des.rounds(uncrypt.des.left, uncrypt.des.right, i,pe, sboxes,p)
+			}
+			ciphertext = uncrypt.des.right.concat(uncrypt.des.left)
+			ciphertext = uncrypt.apply_permutation(ciphertext, ip_inv)
+			return ciphertext;
+		},
+		decrypt : function(ciphertext, key, ip, pc1, pc2, pe, p, sboxes , ip_inv){
+			ascii = uncrypt.hex2bin(ciphertext)
+			ascii_key = uncrypt.hex2bin(key)
+			binary = uncrypt.convertBinary(ascii)
+			binary_key = uncrypt.convertBinary(ascii_key)
+			plaintext = uncrypt.apply_permutation(binary, ip)
+			uncrypt.des.calc_key_itinerary(binary_key, pc1, pc2)
+			uncrypt.des.left = plaintext.slice(0,32)
+			uncrypt.des.right = plaintext.slice(32,64)
+			for(var i=15;i>0;i--){
+				uncrypt.des.rounds(uncrypt.des.left, uncrypt.des.right, i,pe, sboxes,p)
+			}
+			plaintext = uncrypt.des.right.concat(uncrypt.des.left)
+			plaintext = uncrypt.apply_permutation(plaintext, ip_inv)
+			return plaintext;
 		}
 	}
 }

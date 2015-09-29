@@ -13,6 +13,11 @@ ul.off-canvas-list li label{
 ul.off-canvas-list li a:hover{
 	background: #3A4FFF;	
 }
+
+ul.off-canvas-list ul.left-submenu{
+	background: #135D77;
+}
+
 body .main-section{
 	padding: 3rem;
 }
@@ -43,4 +48,16 @@ a.left-off-canvas-toggle.menu-icon{
 
 .bold{
 	font-weight: 700;
+}
+
+.initial-width{
+	width: initial !important;
+}
+
+.display-inline{
+	display: inline-block !important;
+}
+
+.row .row{
+	margin: 0;
 }

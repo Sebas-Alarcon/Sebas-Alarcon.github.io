@@ -10,9 +10,9 @@
 		<script src="/js/jquery-1.11.3.js"></script>
 		<script src="/js/foundation.min.js"></script>
 		<script type="text/javascript" src="/js/math.min.js"></script>
-		<script src="/js/uncrypt.js"></script>
+		<script src="/js/uncrypt.js"></script>		
 		<script type="text/javascript" src="/js/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-		<script src="/js/vigenereattack.js"></script>
+		<script src="/js/des.js"></script>
 		<script>
 			MathJax.Hub.Config({
 				"HTML-CSS": {
@@ -33,39 +33,45 @@
 					<div class="row">
 						<div class="large-12 columns text-justify">
 							<h2 class="mayus bold">
-								Ataque al sistema Vigenere
+								Sistema DES
 							</h2>
-							<img src="/images/vigenere.jpg" alt="" style="width:25%; margin: auto; text-align: center; display: block;">
-							<br>
-							<p class="text-justify">
-								La principal debilidad del cifrado de Vigenère es la naturaleza repetitiva de su clave. Usando el índice de coincidencia de Friendman se podría determinar los posibles textos en claro.
+							<img src="/images/des.gif" alt="" style="width:35%; margin: auto; text-align: center; display: block;">
+							<p>
+								Info DES
 							</p>
 						</div>
 					</div>
 					<div class="row">
-						<div class="columns large-6">
-							<h4 class="mayus bold">
-								Texto Cifrado
-							</h4>
-							<textarea name="" id="ciphertext" class="radius" cols="50" rows="10" value=""></textarea>
-							<br>
-							Longitud máxima de la clave: 
-							<input type="number" id="keylength">
-							<input type="button" class="button tiny radius" id="attack" value="Atacar!">
+						<h3 class="bold mayus">Configuración usada para DES</h3>
+						<div class="row" id="ip"></div>
+						<div class="row" id="ip_inv"></div>
+						<div class="row" id="pc1"></div>
+						<div class="row" id="pc2"></div>
+						<div class="row" id="pe"></div>
+						<div class="row" id="p"></div>
+						<h5 class='bold'>S-Boxes</h5>
+						<div class="row" id="sboxes" style="display:none">
+
 						</div>
-						<div class="columns large-6">
-							<h4 class="mayus bold">
-								Textos en claro
-							</h4>
-							<p id="plaintext" style="word-break: break-word;">
-								
-							</p>
+						<input type="button" class="tiny radius button" value="Mostrar S-Boxes" id="show_sboxes">
+						<div class="row" id="key_wrapp">
+							<h4 class="bold">Clave</h4>
+							<input type="text" class="initial-width display-inline" id="cipher_key" readonly>
+							<input type="button" id="generate_key" class="button tiny radius" value="Generar nueva clave">
+						</div>
+						<div class="row">
+							<h4 class="bold">Texto a cifrar</h4>
+							<input type="text" id="plaintext">
+							<input type="button" class="button tiny radius" id="crypt" value="Cifrar!">
+						</div>
+						<div class="row">
+							<h4 class="bold">Texto a descifrar</h4>
+							<input type="text" id="ciphertext">
+							<input type="button" class="button tiny radius" id="decrypt" value="Descifrar!">
 						</div>
 					</div>
 				</section>
-
 				<a class="exit-off-canvas"></a>
-
 			</div>
 		</div>
 		<script>
